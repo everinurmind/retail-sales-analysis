@@ -35,7 +35,7 @@ print(payment.sort_values('Revenue', ascending=False))
 
 # Visualizations - first draft (day of week will have sorting issue)
 sns.set_theme(style="whitegrid")
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+fig, axes = plt.subplots(2, 3, figsize=(18, 10))
 fig.suptitle('Retail Sales Exploratory Analysis', fontsize=16, fontweight='bold')
 
 # Plot 1 - Revenue by month
@@ -74,6 +74,28 @@ axes[1,1].hist(df_filtered['Total Transaction Amount'], bins=[0,10,20,30,40,50,7
 axes[1,1].set_title('Transaction Amount Distribution (under $200)')
 axes[1,1].set_xlabel('Amount ($)')
 axes[1,1].set_ylabel('Count')
+
+# Plot 5 - Revenue by card brand
+card_plot = df.groupby('Card Brand')['Total Transaction Amount'].agg(['sum', 'mean']).round(2)
+card_plot.columns = ['Revenue', 'Avg Transaction']
+card_plot = card_plot.sort_values('Revenue', ascending=False)
+axes[1,2].bar(card_plot.index, card_plot['Revenue'], color='tomato')
+axes[1,2].set_title('Revenue by Card Brand')
+axes[1,2].set_xlabel('Card Brand')
+axes[1,2].set_ylabel('Revenue ($)')
+axes[1,2].tick_params(axis='x', rotation=45)
+for i, (idx, row) in enumerate(card_plot.iterrows()):
+    axes[1,2].text(i, row['Revenue'] + 500, f"avg ${row['Avg Transaction']:.0f}", 
+                   ha='center', fontsize=9, color='black')
+    
+# Plot 6 - Top 10 days by revenue
+top_days = df.groupby(df['Date'].dt.date)['Total Transaction Amount'].sum().nlargest(10).sort_values(ascending=True)
+axes[0,2].barh([str(d) for d in top_days.index], top_days.values, color='dodgerblue')
+axes[0,2].set_title('Top 10 Days by Revenue')
+axes[0,2].set_xlabel('Revenue ($)')
+axes[0,2].set_ylabel('Date')
+for i, val in enumerate(top_days.values):
+    axes[0,2].text(val + 50, i, f'${val:,.0f}', va='center', fontsize=9)
 
 plt.tight_layout()
 plt.savefig('data/exploratory_analysis.png', dpi=150, bbox_inches='tight')

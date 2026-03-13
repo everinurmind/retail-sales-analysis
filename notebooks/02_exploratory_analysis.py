@@ -64,9 +64,11 @@ axes[1,0].set_title('Revenue by Hour of Day')
 axes[1,0].set_xlabel('Hour')
 axes[1,0].set_ylabel('Revenue ($)')
 
-# Plot 4 - Transaction amount distribution
-axes[1,1].hist(df['Total Transaction Amount'], bins=50, color='mediumpurple', edgecolor='white')
-axes[1,1].set_title('Transaction Amount Distribution')
+# Plot 4 - Transaction amount distribution (under $200, excludes outliers)
+df_filtered = df[df['Total Transaction Amount'] <= 200]
+axes[1,1].hist(df_filtered['Total Transaction Amount'], bins=[0,10,20,30,40,50,75,100,150,200], 
+               color='mediumpurple', edgecolor='white')
+axes[1,1].set_title('Transaction Amount Distribution (under $200)')
 axes[1,1].set_xlabel('Amount ($)')
 axes[1,1].set_ylabel('Count')
 

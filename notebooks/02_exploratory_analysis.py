@@ -57,12 +57,15 @@ axes[0,1].set_xlabel('Day')
 axes[0,1].set_ylabel('Revenue ($)')
 axes[0,1].tick_params(axis='x', rotation=45)
 
-# Plot 3 - Revenue by hour
-hourly_plot = df.groupby('Hour')['Total Transaction Amount'].sum()
-axes[1,0].bar(hourly_plot.index, hourly_plot.values, color='seagreen')
-axes[1,0].set_title('Revenue by Hour of Day')
+# Plot 3 - Revenue by hour (business hours 17:00 - 03:00)
+business_hours = [17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3]
+hourly_plot = df.groupby('Hour')['Total Transaction Amount'].sum().reindex(business_hours)
+labels = ['5pm','6pm','7pm','8pm','9pm','10pm','11pm','12am','1am','2am','3am']
+axes[1,0].bar(labels, hourly_plot.values, color='seagreen')
+axes[1,0].set_title('Revenue by Hour (Business Hours)')
 axes[1,0].set_xlabel('Hour')
 axes[1,0].set_ylabel('Revenue ($)')
+axes[1,0].tick_params(axis='x', rotation=45)
 
 # Plot 4 - Transaction amount distribution (under $200, excludes outliers)
 df_filtered = df[df['Total Transaction Amount'] <= 200]

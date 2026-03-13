@@ -39,14 +39,18 @@ fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 fig.suptitle('Retail Sales Exploratory Analysis', fontsize=16, fontweight='bold')
 
 # Plot 1 - Revenue by month
-monthly_plot = df.groupby('Month')['Total Transaction Amount'].sum()
+df['MonthLabel'] = df['Date'].dt.strftime('%b %Y')
+monthly_order = df.groupby('Date').first().resample('ME').first().index.strftime('%b %Y')
+monthly_plot = df.groupby('MonthLabel')['Total Transaction Amount'].sum().reindex(monthly_order)
 axes[0,0].bar(monthly_plot.index, monthly_plot.values, color='steelblue')
 axes[0,0].set_title('Revenue by Month')
 axes[0,0].set_xlabel('Month')
 axes[0,0].set_ylabel('Revenue ($)')
+axes[0,0].tick_params(axis='x', rotation=45)
 
 # Plot 2 - Revenue by day of week (unsorted - will fix next commit)
-dow_plot = df.groupby('DayOfWeek')['Total Transaction Amount'].sum()
+day_order = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+dow_plot = df.groupby('DayOfWeek')['Total Transaction Amount'].sum().reindex(day_order)
 axes[0,1].bar(dow_plot.index, dow_plot.values, color='darkorange')
 axes[0,1].set_title('Revenue by Day of Week')
 axes[0,1].set_xlabel('Day')

@@ -24,8 +24,14 @@ weekly = pd.read_sql("""
 """, conn)
 
 weekly['revenue_growth'] = weekly['revenue'].pct_change() * 100
+mean_rev = weekly['revenue'].mean()
+std_rev = weekly['revenue'].std()
+weekly['is_anomaly'] = weekly['revenue'] > (mean_rev + 2 * std_rev)
 print("=== WEEK-OVER-WEEK REVENUE GROWTH ===")
-print(weekly[['week','revenue','revenue_growth']].round(1))
+print(weekly[['week','revenue','revenue_growth','is_anomaly']].round(1))
+print(f"\nMean weekly revenue: ${mean_rev:,.0f}")
+print(f"Anomaly threshold (mean + 2std): ${mean_rev + 2*std_rev:,.0f}")
+print(f"Anomalous weeks: {weekly[weekly['is_anomaly']]['week'].tolist()}")
 
 # ── 2. END OF MONTH EFFECT
 df['day_of_month'] = df['Date'].dt.day

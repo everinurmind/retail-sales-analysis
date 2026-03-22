@@ -5,6 +5,11 @@
 
 ---
 
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![SQL](https://img.shields.io/badge/SQL-SQLite-lightgrey)
+
+---
+
 ## Project Overview
 
 Analysis of 4,800+ real retail transactions from a Los Angeles smoke shop (Dec 2025 – Mar 2026). Built to surface actionable business insights around revenue trends, customer behavior, and operational performance.
@@ -38,6 +43,12 @@ Analysis of 4,800+ real retail transactions from a Los Angeles smoke shop (Dec 2
 | Paycheck effect | End-of-month avg $29.35 vs mid-month $25.33 |
 | Anomalous week | W04 2026 — $15,710 (2+ std above mean) |
 | Revenue per day | ~$1,500/day in Jan-Mar 2026 |
+
+---
+
+## Analysis Preview
+
+![Exploratory Analysis](data/exploratory_analysis.png)
 
 ---
 

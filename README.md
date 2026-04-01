@@ -1,7 +1,7 @@
 # Retail Sales & Customer Behavior Analysis
 
 **Tools:** SQL · Python · pandas · Matplotlib · Seaborn  
-**Author:** Nurbol Sultanov | [LinkedIn](https://www.linkedin.com/in/everinurmind/) | [GitHub](https://github.com/everinurmind)
+**Author:** Nurbol Sultanov | [LinkedIn](https://www.linkedin.com/in/nurbolsultanov/) | [GitHub](https://github.com/nurbolsultanov)
 
 ---
 
